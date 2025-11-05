@@ -1,0 +1,84 @@
+// Variables
+$primary-color: #605DC8;
+$secondary-color: #8B89E6;
+$text-color: #333;
+$border-radius: 8px;
+$transition-time: 0.3s;
+
+h2 {
+    text-align: center;
+    font-size: 18pt;
+    color: $primary-color;
+}
+
+.popup-div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 70%;
+}
+
+label {
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 12pt;
+    margin-top: 10px;
+    display: block;
+    text-align: left;
+    width: 100%;
+}
+
+input {
+    border: solid 1px $primary-color;
+    padding: 10px;
+    border-radius: 8px;
+    margin-right: 4px;
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+
+  &:focus {
+    border-color: $primary-color;
+    box-shadow: 0 0 8px rgba(52, 152, 219, 0.5);
+    outline: none;
+  }
+}
+
+button {
+    display: flex;
+    align-items: center;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    padding: 10px;
+    border: solid 1px $primary-color;
+    background: $primary-color;
+    color: white;
+    border-radius: 8px;
+    display: block;
+    width: 48%;
+    cursor: pointer;
+}
+
+button:hover {
+  background-color: darken($primary-color, 10%);
+}
+
+button:disabled {
+  background-color: lighten($primary-color, 25%);
+  cursor: not-allowed;
+}
+
+.invalid {
+  border: solid 2px red;
+}
+
+p {
+  font-size: 9pt;
+  display: block;
+  text-align: left;
+  width: 100%;
+  color: red;
+  margin-bottom: 0px;
+}

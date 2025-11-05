@@ -1,0 +1,10 @@
+<h2>What person do you want to {{data.name}}?</h2>
+<form [formGroup]="formId">
+    <div class="popup-div">
+        <label for="id">ID:</label>
+        <input type="text" placeholder="Enter ID" formControlName="id" [class.invalid]="idStatus !== messageStatus.NONE" (input)="checkValidationId()">
+        @if (idStatus === messageStatus.MISSING) {<p>An ID must be provided</p>}
+        @else if (idStatus === messageStatus.FAILED) {<p>The ID is not valid</p>}
+        <button class="primary" type="button" (click)="onConfirm()" [disabled]="formId.invalid">OK</button>
+    </div>
+</form>

@@ -1,0 +1,56 @@
+<div class="container">
+    <div class="form-container">
+        <form [formGroup]="form">
+            <label for="idNumber">ID Number:</label>
+            <input id="idNumber" type="text" placeholder="Enter ID number" formControlName="idNumber" [class.invalid]="dniStatus !== messageStatus.NONE" (change)="fillFormIfPersonExists()">
+            <div class="space">
+                @if (dniStatus === messageStatus.MISSING) {<p>An ID number must be provided</p>}
+                @else if (dniStatus === messageStatus.FAILED) {<p>The ID number is not valid</p>}
+            </div>
+
+            <label for="name">Name:</label>
+            <input id="name" type="text" placeholder="Enter name" formControlName="name" [class.invalid]="nameStatus !== messageStatus.NONE">
+            <div class="space">
+                @if (nameStatus === messageStatus.MISSING) {<p>A name must be provided</p>}
+                @else if (nameStatus === messageStatus.FAILED) {<p>The name is not valid</p>}
+            </div>
+
+            <label for="surname">Surname:</label>
+            <input id="surname" type="text" placeholder="Enter surname" formControlName="surname" [class.invalid]="surnameStatus !== messageStatus.NONE">
+            <div class="space">
+                @if (surnameStatus === messageStatus.MISSING) {<p>A surname must be provided</p>}
+                @else if (surnameStatus === messageStatus.FAILED) {<p>The surname is not valid</p>}
+            </div>
+
+            <label for="age">Age:</label>
+            <input id="age" type="text" placeholder="Enter age" formControlName="age" [class.invalid]="ageStatus !== messageStatus.NONE">
+            <div class="space">
+                @if (ageStatus === messageStatus.MISSING) {<p>An age must be provided</p>}
+                @else if (ageStatus === messageStatus.FAILED) {<p>The age is not valid</p>}
+            </div>
+
+            <div class="space"></div>
+            <p class="info" [class.visible]="textStatus === messageStatus.EXISTING">ID number already exists</p>
+            <div class="button-container">
+                <button type="button" (click)="createPerson()" [disabled]="textStatus === messageStatus.EXISTING">CREATE</button>
+                <button type="button" (click)="retrieveAllPerson()">GET</button>
+            </div>
+            <p class="info" [class.visible]="textStatus === messageStatus.MISSING">ID number does not exist</p>
+            <div class="button-container">
+                <button type="button" (click)="updatePerson()" [disabled]="textStatus === messageStatus.MISSING">UPDATE</button>
+                <button type="button" (click)="deletePerson()" [disabled]="textStatus === messageStatus.MISSING">DELETE</button>
+            </div>
+            @if (textStatus === messageStatus.FAILED) {<p>This person has to be created first</p>}
+            <p class="info" [class.visible]="form.invalid">All fields must be filled in</p>
+            <div class="button-container">
+                <button type="button" (click)="goToContracts()" [disabled]="form.invalid || textStatus === messageStatus.FAILED">Go to Contracts</button>
+                @if (textStatus === messageStatus.CREATED) {<h3>Person created!</h3>}
+                @else if (textStatus === messageStatus.UPDATED) {<h3>Person updated!</h3>}
+                @else if (textStatus === messageStatus.DELETED) {<h3>Person deleted!</h3>}
+            </div>
+        </form>
+    </div>
+    <div class="list-container">
+        @if (showPersonList) {<app-personlist (hideTable)="hidePersonList()" (personSelected)="populateForm($event)"></app-personlist>}
+    </div>
+</div>

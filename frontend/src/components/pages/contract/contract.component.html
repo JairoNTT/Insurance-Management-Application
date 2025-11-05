@@ -1,0 +1,181 @@
+<div class="client-info">
+    <h3>ID Number: {{ personService.getPersonById(this.policyholderId)?.idNumber }}</h3>
+    <h3>Full name: {{ personService.getPersonById(this.policyholderId)?.name }} {{ personService.getPersonById(this.policyholderId)?.surname }}</h3>
+    <h3>Age: {{ personService.getPersonById(this.policyholderId)?.age }}</h3>
+</div>
+<form [formGroup]="form">
+    <div class="main-div">
+        <div class="form-group">
+            <label>Payment frequency:</label>
+            <select formControlName="paymentFreq" [class.invalid]="showErrors && form.get('paymentFreq')?.invalid">
+                <option value=""></option>
+                <option value="monthly">MONTHLY</option>
+                <option value="yearly">YEARLY</option>
+            </select>
+            @if (showErrors && form.get('paymentFreq')?.invalid) {<p>An option must be selected</p>}
+        </div>
+
+        <div class="form-group">
+            <label>Start date:</label>
+            <input type="date" formControlName="startDate" [class.invalid]="showErrors && startStatus !== messageStatus.NONE" (change)="markErrors()">
+            @if (showErrors && startStatus === messageStatus.MISSING) {<p>A valid date must be selected</p>}
+            @else if (showErrors && startStatus === messageStatus.FAILED) {<p>The dates are not compatible</p>}
+        </div>
+
+        <div class="form-group">
+            <label>End date:</label>
+            <input type="date" formControlName="endDate" [class.invalid]="showErrors && endStatus !== messageStatus.NONE" (change)="markErrors()">
+            @if (showErrors && endStatus === messageStatus.MISSING) {<p>A valid date must be selected</p>}
+            @else if (showErrors && endStatus === messageStatus.FAILED) {<p>The dates are not compatible</p>}
+        </div>
+
+        <div class="form-group">
+            <label>Insured object:</label>
+            <select formControlName="insuredObj" [class.invalid]="showErrors && form.get('insuredObj')?.invalid">
+                <option value=""></option>
+                <option value="car">CAR</option>
+                <option value="house">HOUSE</option>
+                <option value="life">LIFE</option>
+            </select>
+            @if (showErrors && form.get('insuredObj')?.invalid) {<p>An option must be selected</p>}
+        </div>
+    </div>
+</form>
+@if (form.get('insuredObj')?.value !== "" && form.get('insuredObj')?.value !== null) {
+    <h2>Additional details</h2>
+    <hr>
+}
+@if (form.get('insuredObj')?.value === "car") {
+    <form [formGroup]="formCar">
+        <div class="extra-field">
+            <div class="form-group">
+                <label>License Plate:</label>
+                <input type="text" formControlName="registrationNumber" (change)="markErrors()" [class.invalid]="showErrors && licenseStatus !== messageStatus.NONE">
+                @if (showErrors && licenseStatus === messageStatus.MISSING) {<p>A license plate must be provided</p>}
+                @else if (showErrors && licenseStatus === messageStatus.FAILED) {<p>The license plate is not valid</p>}
+            </div>
+            <div class="form-group">
+                <label>Brand:</label>
+                <select formControlName="brand" (change)="onBrandChange($any($event.target).value)" [class.invalid]="showErrors && formCar.get('brand')?.invalid">
+                    <option value=""></option>
+                    <option value="bmw">BMW</option>
+                    <option value="citroen">Citroën</option>
+                    <option value="dacia">Dacia</option>
+                    <option value="ford">Ford</option>
+                    <option value="hyundai">Hyundai</option>
+                    <option value="kia">Kia</option>
+                    <option value="mercedes">Mercedes-Benz</option>
+                    <option value="peugeot">Peugeot</option>
+                    <option value="renault">Renault</option>
+                    <option value="seat">SEAT</option>
+                    <option value="toyota">Toyota</option>
+                    <option value="volkswagen">Volkswagen</option>
+                </select>
+                @if (showErrors && formCar.get('brand')?.invalid) {<p>An option must be selected</p>}
+            </div>
+            <div class="form-group">
+                <label>Model:</label>
+                <select formControlName="model" [class.invalid]="showErrors && formCar.get('model')?.invalid">
+                    <option value=""></option>
+                    <option *ngFor="let model of models" [value]="model">{{ model }}</option>
+                </select>
+                @if (showErrors && formCar.get('model')?.invalid) {<p>An option must be selected</p>}
+            </div>
+            <div class="form-group">
+                <label>Color:</label>
+                <select formControlName="color" [class.invalid]="showErrors && formCar.get('color')?.invalid">
+                    <option value=""></option>
+                    <option value="black">BLACK</option>
+                    <option value="blue">BLUE</option>
+                    <option value="brown">BROWN</option>
+                    <option value="gray">GRAY</option>
+                    <option value="green">GREEN</option>
+                    <option value="orange">ORANGE</option>
+                    <option value="pink">PINK</option>
+                    <option value="purple">PURPLE</option>
+                    <option value="red">RED</option>
+                    <option value="white">WHITE</option>
+                    <option value="yellow">YELLOW</option>
+                </select>
+                @if (showErrors && formCar.get('color')?.invalid) {<p>An option must be selected</p>}
+            </div>
+            <div class="form-group">
+                <label>Power:</label>
+                <input type="number" min="1" formControlName="power" [class.invalid]="showErrors && formCar.get('power')?.invalid">
+                @if (showErrors && formCar.get('power')?.invalid) {<p>A value must be provided</p>}
+            </div>
+        </div>
+    </form>
+}
+@else if (form.get('insuredObj')?.value === "house") {
+    <form [formGroup]="formHouse">
+        <div class="extra-field">
+            <div class="form-group">
+                <label>Building Type:</label>
+                <select formControlName="buildingType" [class.invalid]="showErrors && formHouse.get('buildingType')?.invalid">
+                    <option value=""></option>
+                    <option value="house">HOUSE</option>
+                    <option value="flat">FLAT</option>
+                    <option value="villa">VILLA</option>
+                </select>
+                @if (showErrors && formHouse.get('buildingType')?.invalid) {<p>An option must be selected</p>}
+            </div>
+            <div class="form-group">
+                <label>Inside Area:</label>
+                <input type="number" min="0" formControlName="insideArea" [class.invalid]="showErrors && formHouse.get('insideArea')?.invalid">
+                @if (showErrors && formHouse.get('insideArea')?.invalid) {<p>A value must be provided</p>}
+            </div>
+            <div class="form-group">
+                <label>Outside Area:</label>
+                <input type="number" min="0" formControlName="outsideArea" [class.invalid]="showErrors && formHouse.get('outsideArea')?.invalid">
+                @if (showErrors && formHouse.get('outsideArea')?.invalid) {<p>A value must be provided</p>}
+            </div>
+            <div class="form-group">
+                <label>Content Value:</label>
+                <input type="number" min="0" formControlName="contentValue" [class.invalid]="showErrors && formHouse.get('contentValue')?.invalid">
+                @if (showErrors && formHouse.get('contentValue')?.invalid) {<p>A value must be provided</p>}
+            </div>
+            <div class="form-group">
+                <label>City:</label>
+                <input type="text" formControlName="city" (change)="markErrors()" [class.invalid]="showErrors && cityStatus !== messageStatus.NONE">
+                @if (showErrors && cityStatus === messageStatus.MISSING) {<p>A city must be provided</p>}
+                @else if (showErrors && cityStatus === messageStatus.FAILED) {<p>The city is not valid</p>}
+            </div>
+        </div>
+    </form>
+}
+@else if (form.get('insuredObj')?.value === "life") {
+    <form [formGroup]="formLife">
+        <div class="extra-field">
+            <div class="form-group">
+                <label>Risk Type:</label>
+                <select formControlName="riskType" [class.invalid]="showErrors && formLife.get('riskType')?.invalid">
+                    <option value=""></option>
+                    <option value="high">HIGH</option>
+                    <option value="medium">MEDIUM</option>
+                    <option value="low">LOW</option>
+                </select>
+                @if (showErrors && formLife.get('riskType')?.invalid) {<p>An option must be selected</p>}
+            </div>
+            <div class="form-group">
+                <label>Disease Level:</label>
+                <select formControlName="diseaseLevel" [class.invalid]="showErrors && formLife.get('diseaseLevel')?.invalid">
+                    <option value=""></option>
+                    <option value="high">HIGH</option>
+                    <option value="medium">MEDIUM</option>
+                    <option value="low">LOW</option>
+                </select>
+                @if (showErrors && formLife.get('diseaseLevel')?.invalid) {<p>An option must be selected</p>}
+            </div>
+        </div>
+    </form>
+}
+<div class="buttons-div">
+    <button type="button" (click)="goToDashboard()">Go back</button>
+    @if (showPrices) {<button type="button" (click)="saveAndContinue()">NEXT</button>}
+    <button type="button" (click)="quoteContract()">QUOTE</button>
+</div>
+<div class="list-container">
+    @if (showPrices) {<app-pricesbox></app-pricesbox>}
+    @if (textStatus === messageStatus.CREATED) {<h3>Contract saved!</h3>}
+</div>

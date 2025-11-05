@@ -1,0 +1,28 @@
+<div class="header-container">
+    <h2 class="title">List of Persons</h2>
+    <button class="closing" type="button" (click)="closeTable()">
+        <img src="/assets/closing-icon.png" alt="close">
+    </button>
+</div>
+<div class="table-container">
+    <table matSort (matSortChange)="sortData($event)">
+        <thead>
+            <tr>
+                <th mat-sort-header="dni">ID Number</th>
+                <th mat-sort-header="name">Name</th>
+                <th mat-sort-header="surname">Surname</th>
+                <th mat-sort-header="age">Age</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let person of persons">
+                <td>
+                    <a (click)="selectPerson(person)">{{ person.idNumber }}</a>
+                </td>
+                <td>{{ person.name }}</td>
+                <td>{{ person.surname }}</td>
+                <td>{{ person.age }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
