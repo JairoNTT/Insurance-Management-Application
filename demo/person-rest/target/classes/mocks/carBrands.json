@@ -1,0 +1,14 @@
+{
+  "bmw": ["228i", "330i", "X3", "X5", "X6"],
+  "citroen": ["C3", "C4", "C5"],
+  "dacia": ["Duster", "Jogger", "Logan", "Sandero", "Spring"],
+  "ford": ["Explorer", "Fiesta", "Focus", "Kuga", "Mustang"],
+  "hyundai": ["i10", "i20", "i30", "Kona", "Tucson"],
+  "kia": ["Ceed", "Rio", "Sorento", "Sportage", "Stonic"],
+  "mercedes": ["A-Class", "C-Class", "E-Class", "GLC", "GLS"],
+  "peugeot": ["207", "208", "308", "3008", "508"],
+  "renault": ["Captur", "Clio", "Kadjar", "Megane", "Twingo"],
+  "seat": ["Arona", "Ateca", "Ibiza", "Leon", "Tarraco"],
+  "toyota": ["Camry", "Corolla", "Highlander", "RAV4", "Yaris"],
+  "volkswagen": ["Golf", "Passat", "Polo", "Tiguan", "T-Roc"]
+}
